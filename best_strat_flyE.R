@@ -309,21 +309,24 @@ UP3=24
 #############################################################################
 # Процедура формирования портфелей, подсчета статистик и bootstrap
 start_time <- Sys.time()
-
+start_time
 resultDataFull <- price_d5
 N <- (nrow(resultDataFull)-(2+UP3*4))%/%STEP 
 
 print("Параллельное выполнение")
-cl <- makeCluster(getOption("cl.cores", 24)) # создание кластера из четырёх ядер процессора
+cl <- makeCluster(getOption("cl.cores", 8)) # создание кластера из четырёх ядер процессора
 clusterExport(cl,"infert") # передача данных внутрь кластера
 clusterEvalQ(cl,source("~/workdir/reality_func2.R")) # загрузка функций в кластер
 start_time <- Sys.time()
-temp1 <- parLapply(cl,  1:24, function(p3, UP1, UP2, UP3, STEP, resultDataFull, N) # параллельная версия sapply
+temp1 <- parLapply(cl,  1:8, function(temp_p3, UP1, UP2, UP3, STEP, resultDataFull, N) # параллельная версия sapply
 {    m <- 1  
      realityCheckData <- data.frame(1,1,1,1,1,1,1,1,1,1)
-     for (percent in c(0.5,0.3,0.2,0.1) ){
-       for (p1 in 0:1 ){   
-         for (p2 in 1:2 ){  
+     low <- (temp_p3-1)*3+1
+     up <- temp_p3*3
+     for (p3 in low:up) {  
+       for (percent in c(0.5,0.3,0.2,0.1) ){
+         for (p1 in 1:UP1 ){   
+           for (p2 in 0:UP2 ){  
            #вектор дельт    
            temp <- ret(p1, p2, p3, STEP, N, resultDataFull, UP1, UP2, percent) 
            return.winner<- ret.winner(p1, p2, p3, STEP, N, resultDataFull, UP1, UP2, percent) 
@@ -332,8 +335,9 @@ temp1 <- parLapply(cl,  1:24, function(p3, UP1, UP2, UP3, STEP, resultDataFull, 
            realityCheckData[m, ] <- list(mean(temp),abs(mean(temp))/sd(temp)*sqrt(n), (1-pt(q = abs(mean(temp))/sd(temp)*sqrt(n),df = n-1))*2 ,p1*4, p2, p3*4, percent,
                                          mean(return.winner), mean(return.loser),length(temp[temp<0]))    
            m <- m+1      
+          }
          }
-       }
+       }       
      }
      return (realityCheckData)
      
@@ -341,12 +345,13 @@ temp1 <- parLapply(cl,  1:24, function(p3, UP1, UP2, UP3, STEP, resultDataFull, 
 stopCluster(cl)
 
 end_time <- Sys.time()
+end_time
 
 temp2 <-do.call("rbind", temp1)
 colnames(temp2) <-c("mean","t","p-value","hist_per","moment_per","invest_per","percent","winners","losers", "Amount_of_negative")
 
 
-print("helllllllllllllllo")
+
 #Сохранение результатов
 results <- list(data=temp2, num=N)  # список ценных объектов
 saveRDS(file = "~/workdir/china_best.RDS",results) # сохраняем всё ценное в файл
