@@ -1,2 +1,2 @@
 #!/bin/sh
-Rscript best_strat_flyE.R
+Rscript rus_best_strat_flyE.R
