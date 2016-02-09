@@ -1,2 +1,2 @@
 #!/bin/sh
-Rscript india_best_strat_flyE.R
+Rscript new_ret_rus_best_strat_flyE.R
