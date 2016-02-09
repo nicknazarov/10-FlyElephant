@@ -79,7 +79,7 @@ colnames(temp2) <-c("mean","t","p-value","hist_per","moment_per","invest_per","p
 
 #Сохранение результатов
 results <- list(data=temp2, num=N, n_portf = T)  # список ценных объектов
-saveRDS(file = "~/workdir/russia_best.RDS",results) # сохраняем всё ценное в файл
+saveRDS(file = "~/workdir/new_ret_russia_best.RDS",results) # сохраняем всё ценное в файл
 
 
 
