@@ -32,10 +32,7 @@ id_coeff <- function (datatable, p1, p2, i) {
   # Returns:
   #   Вектор  - названия компаний - ранги
   sgn <- sign(as.numeric(datatable[i-p2,]) - as.numeric(datatable[i-4*p1-p2,]))
-  
-  cat(i, nrow(datatable[(i-4*p1-p2):(i-p2),] ),  nrow(datatable[(i-4*p1-p2-1):(i-p2-1),]))
-  
-  
+
   daily_returns <- datatable[(i-4*p1-p2):(i-p2),] - datatable[(i-4*p1-p2-1):(i-p2-1),]
   
   #print(daily_returns)

@@ -131,7 +131,7 @@ library(parallel)
 print("Параллельное выполнение")
 cl <- makeCluster(getOption("cl.cores", 4)) # создание кластера из четырёх ядер процессора
 clusterExport(cl,"infert") # передача данных внутрь кластера
-clusterEvalQ(cl,source("R/reality_func2.R")) # загрузка функций в кластер
+clusterEvalQ(cl,source("~/workdir/reality_func2.R")) # загрузка функций в кластер
 start_time <- Sys.time()
 temp1 <- parLapply(cl,  1:4, function(temp_p3, UP1, UP2, UP3, STEP, resultDataFull, N) # параллельная версия sapply
 {
