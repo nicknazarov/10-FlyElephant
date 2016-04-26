@@ -7,10 +7,10 @@
 
 rm(list=ls())
 library(parallel)
-if(!require(XLConnect)){
-    install.packages("XLConnect")
-    library(XLConnect)
-}
+#if(!require(XLConnect)){
+#    install.packages("XLConnect")
+#    library(XLConnect)
+#}
 source("~/workdir/reality_func2.R")
 RESULT_PATH <- "~/workdir/"
 rankingFactor <- 0
@@ -22,7 +22,10 @@ country_name_eng <- "russia_bonds"
 #############################################################################
 # Загрузка 
 
-price_d5<- readWorksheet(loadWorkbook("data/bonds.xls"),sheet=1)
+#price_d5<- readWorksheet(loadWorkbook("data/bonds.xls"),sheet=1)
+price_d5<- read.csv(file="~/workdir/bonds.csv", header=TRUE)
+#/home/nazarov/10-FlyElephant/
+#price_d5<- read.csv(file="/home/nazarov/10-FlyElephant/bonds.csv", header=TRUE)
 
 row.names(price_d5) <- price_d5[,1]
 price_d5 <-price_d5[,-1]
