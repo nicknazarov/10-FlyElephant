@@ -110,7 +110,7 @@ results <- list(data=temp2, num=N, n_portf = T)  # список ценных о�
 #rankingFactor <- 0
 #country_name_eng <- "russia_bonds"
 #getwd()
-saveRDS(file = paste("result", "_",country_name_eng,"_f",rankingFactor,"_",Sys.time() ,".RDS",sep=""),results) # сохраняем всё ценное в файл
+saveRDS(file ="bonds_result.RDS",results) # сохраняем всё ценное в файл
 
 start_time
 end_time
