@@ -67,8 +67,8 @@ clusterEvalQ(cl,source("~/workdir/reality_func2.R")) # загрузка функ
 #clusterExport(cl, "UP1", "UP2", "UP3", "STEP", "resultDataFull", "N")
 start_time <- Sys.time()
 temp1 <- parLapply(cl,  1:4, function(temp_p3, UP1, UP2, UP3, STEP, resultDataFull, N, rankingFactor) # параллельная версия sapply
-{    m <- 1  
-#realityCheckData <- data.frame(1,1,1,1,1,1,1,1,1,1)
+{   
+m <- 1  
 realityCheckData <- data.frame(1,1,1,1,1,1,1,1)
 low <- (temp_p3-1)*3+1
 up <- temp_p3*3
@@ -106,7 +106,11 @@ colnames(temp2) <-c("mean","t","p-value","hist_per","moment_per","invest_per","p
 #Сохранение результатов
 results <- list(data=temp2, num=N, n_portf = T)  # список ценных объектов
 
-saveRDS(file = paste(RESULT_PATH ,"result", "_",country_name_eng,"_f",rankingFactor,"_",Sys.time() ,".RDS",sep=""),results) # сохраняем всё ценное в файл
+#results <- "tratata"
+#rankingFactor <- 0
+#country_name_eng <- "russia_bonds"
+#getwd()
+saveRDS(file = paste("result", "_",country_name_eng,"_f",rankingFactor,"_",Sys.time() ,".RDS",sep=""),results) # сохраняем всё ценное в файл
 
 start_time
 end_time
